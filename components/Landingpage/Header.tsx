@@ -11,12 +11,20 @@ const productCategories = {
     {
       label: 'SMD SCREENS INDOOR',
       hasDropdown: true,
-      items: ['Module Series', 'Premium Series', 'Rental Series'],
+      items: [
+        { name: 'Module Series',  href: '/indoorscreens#module'  },
+        { name: 'Premium Series', href: '/indoorscreens#premium' },
+        { name: 'Rental Series',  href: '/indoorscreens#rental'  },
+      ],
     },
     {
       label: 'SMD SCREENS OUTDOOR',
       hasDropdown: true,
-      items: ['Module Series', 'Premium Series', 'Rental Series'],
+      items: [
+        { name: 'Module Series',  href: '/outdoorscreens#module'  },
+        { name: 'Premium Series', href: '/outdoorscreens#premium' },
+        { name: 'Rental Series',  href: '/outdoorscreens#rental'  },
+      ],
     },
     {
       label: 'COB LED DISPLAY',
@@ -26,7 +34,11 @@ const productCategories = {
     {
       label: 'DIGITAL STANDEE',
       hasDropdown: true,
-      items: ['SMD Digital Standee', 'Samsung Touch Digital Standee', 'Samsung Non-Touch Digital Standee'],
+      items: [
+        { name: 'SMD Digital Standee',               href: '#' },
+        { name: 'Samsung Touch Digital Standee',     href: '#' },
+        { name: 'Samsung Non-Touch Digital Standee', href: '#' },
+      ],
     },
   ],
   right: [
@@ -37,13 +49,16 @@ const productCategories = {
 };
 
 // ── Sub-section with hoverable items ───────────────────────────────────────
-function ProductSection({ label, hasDropdown, items, router }: { label: string; hasDropdown: boolean; items: string[]; router?: any }) {
+function ProductSection({ label, hasDropdown, items, router }: { label: string; hasDropdown: boolean; items: { name: string; href: string }[]; router?: any }) {
   // Changed to false so they are hidden initially
   const [isHovered, setIsHovered] = useState(false);
 
   const handleClick = () => {
     if (label === 'SMD SCREENS OUTDOOR') {
       router?.push('/outdoorscreens');
+    }
+    if (label === 'SMD SCREENS INDOOR') {
+      router?.push('/indoorscreens');
     }
   };
 
@@ -82,9 +97,9 @@ function ProductSection({ label, hasDropdown, items, router }: { label: string; 
       >
         <ul className="space-y-2 pl-1">
           {items.map((item) => (
-            <li key={item}>
-              <a href="#" className="font-outfit text-[14px] text-[#888] hover:text-[#007bff] transition-colors duration-150 block">
-                {item}
+            <li key={item.name}>
+              <a href={item.href} className="font-outfit text-[14px] text-[#888] hover:text-[#007bff] transition-colors duration-150 block">
+                {item.name}
               </a>
             </li>
           ))}

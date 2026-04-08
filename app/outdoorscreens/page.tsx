@@ -94,7 +94,7 @@ export default function OutdoorScreensPage() {
         subtitle: "Outdoor"
       },
         {
-        image: "/images/eswanseries.png",
+        image: "/images/Eswanseries.png",
         title: "E-Swan Series",
         subtitle: "Outdoor"
       },

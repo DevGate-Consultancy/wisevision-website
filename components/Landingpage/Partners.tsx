@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import samsung from '@/public/images/samsung.jpg';
-import logos from '@/public/images/partnerlogoslider.jpg';
+import logos from '@/public/images/partnerlogoslider.png';
 
 // ─── Partner data ────────────────────────────────────────────────────────────
 const partners = [
