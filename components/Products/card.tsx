@@ -12,8 +12,8 @@ export default function ProductCard({ image, title, subtitle }: ProductCardProps
     <div className="flex items-center justify-center p-1">
       <div className="product-card">
         <div className="card-inner">
-          {/* Glowing background effect */}
-          <div className="glow-effect" />
+         
+          
 
           {/* Product image area */}
           <div className="image-container">
@@ -58,17 +58,6 @@ export default function ProductCard({ image, title, subtitle }: ProductCardProps
           border-radius: 18px;
           overflow: hidden;
           background: #ffffff;
-        }
-
-        .glow-effect {
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(
-            ellipse at 50% 55%,
-            rgba(30, 90, 200, 0.35) 0%,
-            transparent 70%
-          );
-          z-index: 1;
         }
 
         .image-container {
