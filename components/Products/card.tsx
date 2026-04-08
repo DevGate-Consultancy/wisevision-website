@@ -1,20 +1,19 @@
 'use client'
 import Image from "next/image";
+import Link from "next/link";
 
 interface ProductCardProps {
   image: string;
   title: string;
   subtitle: string;
+  href?: string;
 }
 
-export default function ProductCard({ image, title, subtitle }: ProductCardProps) {
-  return (
+export default function ProductCard({ image, title, subtitle, href }: ProductCardProps) {
+  const content = (
     <div className="flex items-center justify-center p-1">
       <div className="product-card">
         <div className="card-inner">
-         
-          
-
           {/* Product image area */}
           <div className="image-container">
             <Image
@@ -25,7 +24,6 @@ export default function ProductCard({ image, title, subtitle }: ProductCardProps
               priority
             />
           </div>
-
         </div>
 
         {/* Text content below card */}
@@ -62,7 +60,6 @@ export default function ProductCard({ image, title, subtitle }: ProductCardProps
 
         .image-container {
           position: absolute;
-          /* Adjust these values to position/size your image within the card */
           top: 5%;
           left: 5%;
           right: 5%;
@@ -76,8 +73,6 @@ export default function ProductCard({ image, title, subtitle }: ProductCardProps
           object-fit: contain;
           object-position: center;
         }
-
-    
 
         .text-content {
           display: flex;
@@ -105,4 +100,6 @@ export default function ProductCard({ image, title, subtitle }: ProductCardProps
       `}</style>
     </div>
   );
+
+  return href ? <Link href={href}>{content}</Link> : <>{content}</>;
 }
