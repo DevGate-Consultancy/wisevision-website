@@ -15,12 +15,14 @@ export default function OutdoorScreensPage() {
       {
         image: "/images/ModuleSeries.png",
         title: "P-3 SMD Screen",
-        subtitle: "Outdoor"
+        subtitle: "Outdoor",
+        href: "/products/p3-smd-screen"
       },
       {
         image: "/images/ModuleSeries.png",
         title: "P-4 SMD Screen",
-        subtitle: "Outdoor"
+        subtitle: "Outdoor",
+        href: "/products/outdoorscreens/p4-smd"
       },
       {
         image: "/images/ModuleSeries.png",
@@ -45,32 +47,32 @@ export default function OutdoorScreensPage() {
     ],
     productsP: [
       {
-        image: "/images/ModuleSeries.png",
+        image: "/images/smartboxseries.png",
         title: "Smart Box Series",
         subtitle: "Outdoor"
       },
       {
-        image: "/images/ModuleSeries.png",
+        image: "/images/transparentseries.png",
         title: "Transparent Series",
         subtitle: "Outdoor"
       },
       {
-        image: "/images/ModuleSeries.png",
+        image: "/images/ultrafineseries.png",
         title: "Ultra Fine Series",
         subtitle: "Outdoor"
       },
       {
-        image: "/images/ModuleSeries.png",
+        image: "/images/ironcabinet.png",
         title: "Iron Cabinet Series",
         subtitle: "Outdoor"
       },
       {
-        image: "/images/pilotproseries.png",
+        image: "/images/creativeseries.png",
         title: "Creative Series",
         subtitle: "Outdoor"
       },
       {
-        image: "/images/ModuleSeries.png",
+        image: "/images/digitalpolestreamer.png",
         title: "Digital Pole Streamer",
         subtitle: "Outdoor"
       },

@@ -1,7 +1,7 @@
 'use client';
 
 import { content } from '@/lib/content';
-import astronaut from '@/public/images/astronaut.svg';
+import astronaut from '@/public/images/astro.png';
 
 export default function Products() {
   return (
