@@ -16,7 +16,7 @@ export default function IndoorScreensPage() {
         image: "/images/P1.2SMDScreen.png",
         title: "P-1.2 SMD Screen",
         subtitle: "Indoor",
-        href: "/products/i3-smd-screen"
+        href: "/products/p1.2-smd-screen"
       },
       {
         image: "/images/P1.5SMDScreen.png",

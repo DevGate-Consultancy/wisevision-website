@@ -19,7 +19,7 @@ export default function ProductDetail({ image, title, description, specs }: Prod
   const rightSpecs = specs.slice(half);
 
   return (
-    <section className="bg-[#f4f6f9] py-12 md:py-20">
+    <section className="bg-[#FAFAFA] py-12 md:py-20">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="flex flex-col md:flex-row gap-10 md:gap-16 items-start">
 

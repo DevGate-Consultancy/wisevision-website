@@ -77,10 +77,10 @@ export default function Footer() {
               <ul className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
                 <li>
                   <a 
-                    href="tel:+923010572356"
+                    href="tel:03280344789"
                     className="text-gray-300 text-xs sm:text-sm md:text-[14px] font-outfit hover:text-[#00AEEF] transition-colors duration-200"
                   >
-                    +92 301 0572356
+                    03280344789
                   </a>
                 </li>
                 <li>

@@ -20,8 +20,8 @@ export default function OurClients() {
           style={{
             backgroundImage: `url(${logoslider.src})`,
             backgroundRepeat: 'repeat-x',
-            backgroundSize: 'auto 50px',
-            height: '50px',
+            backgroundSize: 'auto 100px',
+            height: '100px',
             width: '200%',
           }}
         />
