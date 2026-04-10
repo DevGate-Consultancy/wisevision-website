@@ -44,7 +44,7 @@ const productCategories = {
   ],
   right: [
     { label: 'Digital Podium', href: '#' },
-    { label: 'SAMSUNG DISPLAYS', href: '#' },
+    { label: 'SAMSUNG DISPLAYS', href: '/samsung' },
     { label: 'PHILIPS DISPLAYS', href: '#' },
   ],
 };

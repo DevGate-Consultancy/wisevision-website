@@ -69,10 +69,10 @@ export default function Reviews() {
 
         {/* ── Header ──────────────────────────────────────────────────────────── */}
         <div className="text-center mb-10">
-          <h2 className="text-[44px] font-outfit font-bold text-[#1a2e5a] mb-4">
+          <h2 className="text-[44px] font-outfit font-meduim text-[#003088] mb-4">
             Hear From Our Partners
           </h2>
-          <p className="text-[16px] text-gray-500 font-outfit leading-relaxed max-w-lg mx-auto">
+          <p className="text-[18px] text-gray-500 font-outfit leading-relaxed max-w-lg mx-auto">
             We believe in delivering uncompromised hardware quality and ensuring
             complete client satisfaction above all else.
           </p>
@@ -80,15 +80,15 @@ export default function Reviews() {
 
         {/* ── Google trust badge ───────────────────────────────────────────────── */}
         <div className="flex flex-col items-center mb-16">
-          <p className="text-[17px] font-outfit mb-2">
+          <p className="text-[20px] font-outfit mb-2">
             <span className="font-black text-gray-900">EXCELLENT</span>{' '}
             <span className="text-gray-500">Based on </span>
             <span className="font-bold text-gray-900">50+ Reviews</span>
           </p>
-          <StarRating count={5} />
+          <StarRating count={5}/>
           {/* Google wordmark */}
           <div className="mt-2 flex items-center gap-1">
-            <GoogleG size={22} />
+            <GoogleG size={26} />
             <span className="text-[22px] font-normal" style={{ fontFamily: 'Product Sans, Arial, sans-serif' }}>
               <span style={{ color: '#4285F4' }}>G</span>
               <span style={{ color: '#EA4335' }}>o</span>

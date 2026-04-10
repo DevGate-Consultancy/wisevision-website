@@ -9,12 +9,12 @@ export const content = {
       links: [
         { name: "Home", href: "/", active: true },
         { name: "Products", href: "/products", hasDropdown: true },
-        { name: "Applications", href: "/applications" },
-        { name: "Blog", href: "/blog" },
-        { name: "Projects", href: "/projects" },
-        { name: "Affiliations", href: "/affiliations" },
-        { name: "About Us", href: "/about" },
-        { name: "Contact Us", href: "/contact" }
+        { name: "Applications", href: "/#" },
+        { name: "Blog", href: "/#" },
+        { name: "Projects", href: "/#" },
+        { name: "Affiliations", href: "/affilations" },
+        { name: "About Us", href: "/#" },
+        { name: "Contact Us", href: "/#" }
       ],
       cta: "Get A Quote"
     }
