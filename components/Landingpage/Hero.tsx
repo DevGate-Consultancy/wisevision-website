@@ -134,7 +134,7 @@ export default function Hero() {
 
   return (
     <section className="relative bg-white overflow-hidden">
-      <div className="h-[320px] sm:h-[400px] md:h-[460px] lg:h-[520px]">
+      <div className="h-[420px] sm:h-[500px] md:h-[560px] lg:h-[620px]">
         <div
           className={`flex h-full ${animated ? 'transition-transform duration-700 ease-in-out' : ''}`}
           style={{

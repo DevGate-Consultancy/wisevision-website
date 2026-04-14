@@ -17,7 +17,7 @@ export default function OurClients() {
 
       <div className="relative w-full h-[80px] sm:h-[100px] md:h-[120px] overflow-hidden bg-white py-2 sm:py-3">
         <div
-          className="animate-marquee mt-3 sm:mt-4 md:mt-5"
+          className="animate-marquee mt-3 sm:mt-4 md:mt-0"
           style={{
             backgroundImage: `url(${logoslider.src})`,
             backgroundRepeat: 'repeat-x',
