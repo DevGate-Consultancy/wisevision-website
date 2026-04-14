@@ -66,7 +66,7 @@ export default function ProductDetail({ image, title, description, specs, textco
                   <ul className="space-y-2">
                     {leftSpecs.map((spec) => (
                       <li key={spec.label} className="flex items-baseline gap-1 font-outfit text-[14px] md:text-[15px]">
-                        <span className="text-[#555] before:content-['•'] before:mr-2">{spec.label}{showSpecs ? ':' : ''}</span>
+                        <span className="text-[#999999] before:content-['•'] before:mr-2">{spec.label}{showSpecs ? ':' : ''}</span>
                         <span className="font-semibold text-[#0f141e]">{spec.value}</span>
                       </li>
                     ))}
@@ -75,7 +75,7 @@ export default function ProductDetail({ image, title, description, specs, textco
                   <ul className="space-y-2">
                     {rightSpecs.map((spec) => (
                       <li key={spec.label} className="flex items-baseline gap-1 font-outfit text-[14px] md:text-[15px]">
-                        <span className="text-[#555] before:content-['•'] before:mr-2">{spec.label}{showSpecs ? ':' : ''}</span>
+                        <span className="text-[#999999] before:content-['•'] before:mr-2">{spec.label}{showSpecs ? ':' : ''}</span>
                         <span className="font-semibold text-[#0f141e]">{spec.value}</span>
                       </li>
                     ))}

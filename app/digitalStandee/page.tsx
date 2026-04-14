@@ -23,6 +23,7 @@ export default function digitalStandee() {
         title: "Indoor SMD Digital Standee",
         subtitle: "",
         name: "SMD Digital Standee",
+        href: "/products/indoor-digital-standee",
         features: [
           "Standard Screen Size",
           "Backward Foldable Design",

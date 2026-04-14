@@ -1,7 +1,19 @@
 'use client';
 
-import { content } from '@/lib/content';
 import arrowDown from '@/public/images/arrow-down.svg';
+
+const topBar = "WISE VISION is an Authorized distributor of Samsung, Philips, LianTronics, & Unilumin A/V Solutions in Pakistan.";
+const logo = { src: "/images/Logo.svg", alt: "WISE VISION Logo" };
+const navLinks = [
+  { name: "Home", href: "/", active: true },
+  { name: "Products", href: "/products", hasDropdown: true },
+  { name: "Applications", href: "/#" },
+  { name: "Blog", href: "/#" },
+  { name: "Projects", href: "/#" },
+  { name: "Affiliations", href: "/affilations" },
+  { name: "About Us", href: "/#" },
+  { name: "Contact Us", href: "/#" },
+];
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -36,14 +48,14 @@ const productCategories = {
       label: 'DIGITAL STANDEE',
       hasDropdown: true,
       items: [
-        { name: 'SMD Digital Standee',               href: '#' },
-        { name: 'Samsung Touch Digital Standee',     href: '#' },
-        { name: 'Samsung Non-Touch Digital Standee', href: '#' },
+        { name: 'SMD Digital Standee',               href: '/digitalStandee#indoor-smd-digital-standee' },
+        { name: 'Samsung Touch Digital Standee',     href: '/digitalStandee#samsung-touch-digital-standee' },
+        { name: 'Samsung Non-Touch Digital Standee', href: '/digitalStandee#samsung-non-touch-digital-standee' },
       ],
     },
   ],
   right: [
-    { label: 'Digital Podium', href: '#' },
+    { label: 'Digital Podium', href: '/digitalPodium' },
     { label: 'SAMSUNG DISPLAYS', href: '/samsung' },
     { label: 'PHILIPS DISPLAYS', href: '/phillips' },
   ],
@@ -140,7 +152,7 @@ export default function Header() {
       <div className="bg-[#14a4e9] h-12 sm:h-14 md:h-16 overflow-hidden">
         <div className="container mx-auto px-4 h-full flex items-center justify-center">
           <p className="text-white text-sm sm:text-base md:text-lg lg:text-[22px] font-outfit font-normal text-center px-2">
-            {content.header.topBar}
+            {topBar}
           </p>
         </div>
       </div>
@@ -150,11 +162,11 @@ export default function Header() {
         <div className="container mx-auto px-4 h-full flex items-center justify-between py-4 lg:py-0">
           
           {/* Logo */}
-          <div className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <div className="relative h-[40px] w-[72px] sm:h-[50px] sm:w-[90px] lg:h-[59.896px] lg:w-[107.813px]">
               <img
-                src={content.header.logo.src}
-                alt={content.header.logo.alt}
+                src={logo.src}
+                alt={logo.alt}
                 className="absolute inset-0 w-full h-full object-cover"
               />
             </div>
@@ -162,11 +174,11 @@ export default function Header() {
               <span className="text-white text-base sm:text-lg lg:text-[24px] font-outfit font-semibold leading-tight uppercase">Wise</span>
               <span className="text-white text-base sm:text-lg lg:text-[24px] font-outfit font-semibold leading-tight uppercase">Vision</span>
             </div>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-4 xl:gap-9 h-full">
-            {content.header.navigation.links.map((link) => {
+            {navLinks.map((link) => {
               const isProducts = link.hasDropdown && link.name === 'Products';
               
               return (
@@ -270,7 +282,7 @@ export default function Header() {
         {mobileMenuOpen && (
           <div className="lg:hidden bg-[#05293a] border-t border-[#14a4e9]/30">
             <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
-              {content.header.navigation.links.map((link) => {
+              {navLinks.map((link) => {
                 const isProducts = link.hasDropdown && link.name === 'Products';
                 
                 if (isProducts) {

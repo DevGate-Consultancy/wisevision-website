@@ -1,10 +1,11 @@
 'use client';
 
-import { content } from '@/lib/content';
 import Link from 'next/link';
 import logo from '@/public/images/Logo.svg';
 import instagramIcon from '@/public/images/Instagram.svg';
 import Image from 'next/image';
+
+const footerDescription = "WISE VISION is Pakistan's premier digital signage solutions provider & an authorized distributor of Samsung, Philips, & LianTronics. We empower businesses with premium indoor/outdoor SMD screens, digital billboards, pole streamers, & Samsung products including LED video walls, interactive screens, Hospitality TVs, & monitors in Pakistan.";
 
 export default function Footer() {
   const links = [
@@ -22,8 +23,8 @@ export default function Footer() {
     <div>
       {/* ── Main Footer ─────────────────────────────────────────────────────── */}
       <footer className="bg-[#021017] relative overflow-hidden">
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 py-8 sm:py-10 md:py-14">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 md:gap-12">
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 py-6 sm:py-8 md:py-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-10">
 
             {/* ── Col 1: Logo + Description ──────────────────────────────────── */}
             <div className="lg:col-span-1">
@@ -47,22 +48,22 @@ export default function Footer() {
                 </div>
               </div>
 
-              <p className=" text-gray-300 text-base lg:text-[15px] sm:text-[13px] font-outfit leading-tight mt-[-40]">
-                {content.footer.description}
+              <p className="text-gray-300 text-xs sm:text-sm font-outfit leading-snug mt-[-40]">
+                {footerDescription}
               </p>
             </div>
 
             {/* ── Col 2: Links ───────────────────────────────────────────────── */}
             <div className="lg:col-span-1">
-              <h4 className="text-white text-base lg:text-[20px]sm:text-lg md:text-[18px] font-outfit font-bold mb-4 sm:mb-6">
+              <h4 className="text-white text-sm sm:text-base font-outfit font-bold mb-3 sm:mb-4">
                 Links
               </h4>
-              <div className="grid grid-cols-2 gap-x-4 sm:gap-x-1 gap-y-3 sm:gap-y-4">
+              <div className="grid grid-cols-2 gap-x-4 gap-y-2">
                 {links.map((link) => (
                   <Link
                     key={link.name}
                     href={link.href}
-                    className="text-gray-300 text-base lg:text-[20px] sm:text-sm md:text-[14px] font-outfit hover:text-[#00AEEF] transition-colors duration-200"
+                    className="text-gray-300 text-xs sm:text-sm font-outfit hover:text-[#00AEEF] transition-colors duration-200"
                   >
                     {link.name}
                   </Link>
@@ -72,23 +73,17 @@ export default function Footer() {
 
             {/* ── Col 3: Contact Us ───────────────────────────────────────────── */}
             <div className="lg:col-span-1">
-              <h4 className="text-white text-base lg:text-[20px] sm:text-lg md:text-[18px] font-outfit font-bold mb-4 sm:mb-6">
+              <h4 className="text-white text-sm sm:text-base font-outfit font-bold mb-3 sm:mb-4">
                 Contact Us
               </h4>
-              <ul className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
+              <ul className="space-y-2 mb-3 sm:mb-4">
                 <li>
-                  <a 
-                    href="tel:03280344789"
-                    className="text-gray-300 text-base lg:text-[20px] sm:text-sm md:text-[14px] font-outfit hover:text-[#00AEEF] transition-colors duration-200"
-                  >
+                  <a href="tel:03280344789" className="text-gray-300 text-xs sm:text-sm font-outfit hover:text-[#00AEEF] transition-colors duration-200">
                     03280344789
                   </a>
                 </li>
                 <li>
-                  <a 
-                    href="mailto:support@wisevision.pk"
-                    className="text-gray-300 text-base lg:text-[20px] sm:text-sm md:text-[14px] font-outfit hover:text-[#00AEEF] transition-colors duration-200"
-                  >
+                  <a href="mailto:support@wisevision.pk" className="text-gray-300 text-xs sm:text-sm font-outfit hover:text-[#00AEEF] transition-colors duration-200">
                     support@wisevision.pk
                   </a>
                 </li>
@@ -124,25 +119,19 @@ export default function Footer() {
 
             {/* ── Col 4: Our Addresses ────────────────────────────────────────── */}
             <div className="lg:col-span-1">
-              <h4 className="text-white text-base lg:text-[20px] sm:text-lg md:text-[18px] font-outfit font-bold mb-4 sm:mb-6">
+              <h4 className="text-white text-sm sm:text-base font-outfit font-bold mb-3 sm:mb-4">
                 Our Addresses
               </h4>
-              <div className="space-y-4 sm:space-y-5">
+              <div className="space-y-3">
                 <div>
-                  <p className="text-white text-base lg:text-[20px] sm:text-sm md:text-[14px] font-outfit font-bold mb-1">
-                    Head Office:
-                  </p>
-                  <p className="text-gray-300 text-base lg:text-[20px] sm:text-sm md:text-[14px] font-outfit leading-relaxed">
+                  <p className="text-white text-xs sm:text-sm font-outfit font-bold mb-1">Head Office:</p>
+                  <p className="text-gray-300 text-xs sm:text-sm font-outfit leading-relaxed">
                     Plaza 43 MB Sector B DHA phase 6<br />Lahore
                   </p>
                 </div>
                 <div>
-                  <p className="text-white text-base lg:text-[20px] sm:text-sm md:text-[14px] font-outfit font-bold mb-1">
-                    Regional Offices:
-                  </p>
-                  <p className="text-gray-300 lg:text-[20px] text-base sm:text-sm md:text-[14px] font-outfit">
-                    Karachi &amp; Lahore
-                  </p>
+                  <p className="text-white text-xs sm:text-sm font-outfit font-bold mb-1">Regional Offices:</p>
+                  <p className="text-gray-300 text-xs sm:text-sm font-outfit">Karachi &amp; Lahore</p>
                 </div>
               </div>
             </div>

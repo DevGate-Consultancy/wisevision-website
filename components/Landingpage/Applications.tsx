@@ -1,7 +1,11 @@
 'use client';
 
-import { content } from '@/lib/content';
 import Image, { StaticImageData } from 'next/image';
+
+const applicationsHeader = {
+  title: "Tailored For Every Industry",
+  subtitle: "Discover our wide range of applications across industries",
+};
 import healthcare from '@/public/images/healthcare.jpg';
 import retail from '@/public/images/retailstore.jpg';
 import education from '@/public/images/education.jpg';
@@ -96,20 +100,20 @@ const applicationsData: ApplicationItem[] = [
 
 export default function Applications() {
   return (
-    <section className="py-12 sm:py-16 md:py-20">
+    <section className="py-8 sm:py-12 md:py-16">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-8 sm:mb-10 md:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[46px] font-outfit font-semibold text-[#00AEEF] mb-2 sm:mb-3">
-            {content.applications.title}
+        <div className="text-center mb-6 sm:mb-8 md:mb-10">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-outfit font-semibold text-[#00AEEF] mb-2 sm:mb-3">
+            {applicationsHeader.title}
           </h2>
-          <p className="text-sm sm:text-base md:text-lg lg:text-[20px] font-outfit font-normal text-[#7a7f8e]">
-            {content.applications.subtitle}
+          <p className="text-xs sm:text-sm md:text-base font-outfit font-normal text-[#7a7f8e]">
+            {applicationsHeader.subtitle}
           </p>
         </div>
 
         {/* Mobile/Tablet Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 max-w-6xl mx-auto lg:hidden">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-5xl mx-auto lg:hidden">
           {applicationsData.map((app) => (
             <div
               key={app.name}
@@ -140,8 +144,8 @@ export default function Applications() {
 
         {/* Desktop Mosaic Grid — original layout with tall HealthCare & Entertainment */}
         <div
-          className="hidden lg:grid grid-cols-3 gap-4 max-w-6xl mx-auto"
-          style={{ gridTemplateRows: 'repeat(4, 180px)' }}
+          className="hidden lg:grid grid-cols-3 gap-3 max-w-5xl mx-auto"
+          style={{ gridTemplateRows: 'repeat(4, 140px)' }}
         >
           {applicationsData.map((app) => (
             <div

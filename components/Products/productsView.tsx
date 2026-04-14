@@ -169,11 +169,21 @@ export default function Products({
                     </h2>
                     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 flex flex-col md:flex-row items-center gap-10">
                       <div className="w-full md:w-1/2 flex items-center justify-center p-6">
-                        <img
-                          src={product.image}
-                          alt={product.name}
-                          className="w-full max-h-90 pr-15 object-contain rounded-xl"
-                        />
+                        {product.href ? (
+                          <a href={product.href} className="block w-full">
+                            <img
+                              src={product.image}
+                              alt={product.name}
+                              className="w-full max-h-90 pr-15 object-contain rounded-xl cursor-pointer hover:opacity-90 transition-opacity duration-200"
+                            />
+                          </a>
+                        ) : (
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            className="w-full max-h-90 pr-15 object-contain rounded-xl"
+                          />
+                        )}
                       </div>
                       <div className="w-full md:w-1/2 flex flex-col justify-center gap-4 max-w-[500px]">
                         <h3 className="text-2xl font-bold text-gray-900">
