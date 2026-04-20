@@ -11,8 +11,8 @@ const navLinks = [
   { name: "Blog", href: "/#" },
   { name: "Projects", href: "/#" },
   { name: "Affiliations", href: "/affilations" },
-  { name: "About Us", href: "/#" },
-  { name: "Contact Us", href: "/#" },
+  { name: "About Us", href: "/aboutUs" },
+  { name: "Contact Us", href: "/contactUs" },
 ];
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
