@@ -23,11 +23,11 @@ const articleData = {
   previousArticleLink: "/blog/pricing-guide",
   nextArticleLink: "/blog/monitors",
   otherArticles: [
-    { image: '/images/1.png', title: 'Max Series SMD Screen vs Traditional LED Screens - What\'s the Difference?', href: '#' },
-    { image: '/images/1.png', title: 'Max Series SMD Screen vs Traditional LED Screens - What\'s the Difference?', href: '#' },
-    { image: '/images/1.png', title: 'Max Series SMD Screen vs Traditional LED Screens - What\'s the Difference?', href: '#' },
-    { image: '/images/1.png', title: 'Max Series SMD Screen vs Traditional LED Screens - What\'s the Difference?', href: '#' },
-    { image: '/images/1.png', title: 'Max Series SMD Screen vs Traditional LED Screens - What\'s the Difference?', href: '#' }
+    { image: '/images/Blog1.png', title:'Max Series SMD Screen vs Traditional LED Screens – What\'s the Difference?', href: '/blog/smd-screens' },
+    { image: '/images/Blog4.png', title: 'Everything You Need to Know About Monitors', href: '/blog/monitors' },
+    { image: '/images/Blog5.png', title: 'Philips Interactive Board – Complete Overview', href: '/blog/phillips' },
+    { image: '/images/Blog6.png', title: 'Philips Interactive Whiteboard for Schools & Offices in Pakistan', href: '/blog/education' },
+    { image: '/images/Blog7.png', title: 'Top Industries Using SMD Screens in Pakistan', href: '/blog/industry' }
   ]
 };
 

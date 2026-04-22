@@ -84,16 +84,21 @@ export default function BlogArticle({
                 <div className="bg-[#EEF6FB] rounded-2xl p-8">
                   <h3 className="text-xl md:text-2xl font-outfit font-bold text-[#08425D] mb-3">Other Articles</h3>
                   <div className="w-75 h-0.5 bg-[#00AEEF] mb-6" />
-                  <div className="flex flex-col gap-6">
+                  <div className="flex flex-col">
                     {otherArticles.map((article, i) => (
-                      <Link key={i} href={article.href} className="flex gap-4 group">
-                        <div className="relative w-24 h-16 shrink-0 rounded-lg overflow-hidden">
-                          <Image src={article.image} alt={article.title} fill className="object-cover" />
-                        </div>
-                        <p className="text-[#08425D] text-base leading-snug group-hover:text-[#00AEEF] transition-colors">
-                          {article.title}
-                        </p>
-                      </Link>
+                      <div key={i}>
+                        <Link href={article.href} className="flex gap-4 group pb-9">
+                          <div className="relative w-28 h-20 shrink-0 rounded-lg overflow-hidden">
+                            <Image src={article.image} alt={article.title} fill className="object-cover" />
+                          </div>
+                          <p className="text-[#08425D] text-base leading-snug group-hover:text-[#00AEEF] transition-colors">
+                            {article.title}
+                          </p>
+                        </Link>
+                        {i < otherArticles.length - 1 && (
+                          <div className="w-full h-px bg-[#CDCDCD] mb-6" />
+                        )}
+                      </div>
                     ))}
                   </div>
                 </div>

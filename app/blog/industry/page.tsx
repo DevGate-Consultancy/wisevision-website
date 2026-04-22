@@ -23,11 +23,11 @@ const articleData = {
   previousArticleLink: "/blog/education",
   nextArticleLink: "/blog/technology",
   otherArticles: [
-    { image: '/images/1.png', title: 'Max Series SMD Screen vs Traditional LED Screens - What\'s the Difference?', href: '#' },
-    { image: '/images/1.png', title: 'Max Series SMD Screen vs Traditional LED Screens - What\'s the Difference?', href: '#' },
-    { image: '/images/1.png', title: 'Max Series SMD Screen vs Traditional LED Screens - What\'s the Difference?', href: '#' },
-    { image: '/images/1.png', title: 'Max Series SMD Screen vs Traditional LED Screens - What\'s the Difference?', href: '#' },
-    { image: '/images/1.png', title: 'Max Series SMD Screen vs Traditional LED Screens - What\'s the Difference?', href: '#' }
+    { image: '/images/Blog1.png', title:'Max Series SMD Screen vs Traditional LED Screens – What\'s the Difference?', href: '/blog/smd-screens' },
+    { image: '/images/Blog8.png', title: 'COB vs SMD LED Screens: Which Display Technology is Right for You?', href: '/blog/technology' },
+    { image: '/images/Blog9.png', title: 'Samsung Odyssey Gaming Monitor G40B – Full Review', href: '/blog/samsung-2' },
+    { image: '/images/Blog5.png', title: 'Philips Interactive Board – Complete Overview', href: '/blog/phillips' },
+    { image: '/images/Blog6.png', title: 'Philips Interactive Whiteboard for Schools & Offices in Pakistan', href: '/blog/education' }
   ]
 };
 

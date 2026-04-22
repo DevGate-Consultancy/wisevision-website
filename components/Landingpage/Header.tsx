@@ -176,7 +176,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-4 xl:gap-9 h-full">
+          <div className="hidden mr-5 lg:flex items-center gap-4 xl:gap-9 h-full">
             {navLinks.map((link) => {
               const isProducts = link.hasDropdown && link.name === 'Products';
               
