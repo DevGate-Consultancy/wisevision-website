@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import ProductCard from './card';
 import Banner from '@/components/Products/banner';
 
@@ -33,6 +34,8 @@ interface ProductsProps {
   productsP?: Product[];
   productsR?: Product[];
   productsS?: Product[];
+  productsT?: Product[];
+  productsH?: Product[];
   navigationButtons?: NavigationButton[];
   textColor?: string; // Legacy prop for backward compatibility
   bannerTextColor?: string; // Specific color for banner text
@@ -84,6 +87,7 @@ export default function Products({
           title={product.title}
           subtitle={product.subtitle}
           href={product.href}
+          productId={product.id}
         />
       ))}
     </div>
@@ -169,7 +173,15 @@ export default function Products({
                     </h2>
                     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 flex flex-col md:flex-row items-center gap-10">
                       <div className="w-full md:w-1/2 flex items-center justify-center p-6">
-                        {product.href ? (
+                        {product.id ? (
+                          <Link href={`/products/${product.id}`} className="block w-full">
+                            <img
+                              src={product.image}
+                              alt={product.name}
+                              className="w-full max-h-90 pr-15 object-contain rounded-xl cursor-pointer hover:opacity-90 transition-opacity duration-200"
+                            />
+                          </Link>
+                        ) : product.href ? (
                           <a href={product.href} className="block w-full">
                             <img
                               src={product.image}

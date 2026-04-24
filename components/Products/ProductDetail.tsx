@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Banner from './banner';
 
 interface Spec {
   label: string;
@@ -13,17 +14,53 @@ export interface ProductDetailProps {
   textcolor?: string;
   showSpecs?: boolean;
   inches?: string;
+  // New product details props
+  bannerTitle?: string;
+  bannerDescription?: string;
+  bannerImage?: string;
+  productDescription?: string;
+  productSpecification?: string;
 }
 
-export default function ProductDetail({ image, title, description, specs, textcolor = "#0f141e", showSpecs = true, inches }: ProductDetailProps) {
+export default function ProductDetail({ 
+  image, 
+  title, 
+  description, 
+  specs, 
+  textcolor = "#0f141e", 
+  showSpecs = true, 
+  inches,
+  bannerTitle,
+  bannerDescription,
+  bannerImage,
+  productDescription,
+  productSpecification 
+}: ProductDetailProps) {
   // Split specs into two columns
   const half = Math.ceil(specs.length / 2);
   const leftSpecs = specs.slice(0, half);
   const rightSpecs = specs.slice(half);
 
+  // Use product details if available, otherwise fall back to original props
+  const displayTitle = bannerTitle || title;
+  const displayDescription = productDescription || description;
+  const displaySpecification = productSpecification;
+
   return (
     <section className="bg-[#FAFAFA] py-12 md:py-20">
       <div className="container mx-auto px-4 max-w-6xl">
+        
+        {/* Banner Section */}
+        {(bannerTitle || bannerDescription || bannerImage) && (
+          <Banner
+            bannerImage={bannerImage || "/images/placeholder-banner.jpg"}
+            bannerAlt={bannerTitle || "Product Banner"}
+            title={bannerTitle || ""}
+            description={bannerDescription || ""}
+            className="text-white"
+          />
+        )}
+
         <div className="flex flex-col md:flex-row gap-10 md:gap-16 items-start">
 
           {/* Product Image */}
@@ -31,7 +68,7 @@ export default function ProductDetail({ image, title, description, specs, textco
             <div className="relative w-full aspect-square rounded-3xl overflow-hidden ">
               <Image
                 src={image}
-                alt={title}
+                alt={displayTitle}
                 fill
                 className="object-contain"
                 priority
@@ -41,12 +78,14 @@ export default function ProductDetail({ image, title, description, specs, textco
 
           {/* Right Content */}
           <div className="flex-1 pt-12 sm:pt-0 ">
-            <h1 className="font-outfit font-bold text-3xl md:text-4xl text-[#0f141e] mb-4">
-              {title}
-            </h1>
+            {!bannerTitle && (
+              <h1 className="font-outfit font-bold text-3xl md:text-4xl text-[#0f141e] mb-4">
+                {displayTitle}
+              </h1>
+            )}
             <p className="text-[#9B9B9B] font-outfit text-[16px] md:text-[17px] mb-4">{inches}</p>
             <p className="font-outfit text-[15px] md:text-[16px] text-[#555] leading-relaxed mb-8 max-w-xl">
-              {description}
+              {displayDescription}
             </p>
 
             <a
@@ -56,7 +95,18 @@ export default function ProductDetail({ image, title, description, specs, textco
               Get A Quote
             </a>
 
-            {/* Specs */}
+            {/* Product Specification */}
+            {displaySpecification ? (
+              <div>
+                <h2 className="font-outfit font-semibold text-2xl md:text-3xl text-[#0f141e] mb-5">
+                  Product Specification:
+                </h2>
+                <div className="font-outfit text-[15px] md:text-[16px] text-[#555] leading-relaxed whitespace-pre-line">
+                  {displaySpecification}
+                </div>
+              </div>
+            ) : (
+              /* Original Specs */
               <div>
                 <h2 className="font-outfit font-semibold text-2xl md:text-3xl text-[#0f141e] mb-5">
                   Product Specification:
@@ -82,6 +132,7 @@ export default function ProductDetail({ image, title, description, specs, textco
                   </ul>
                 </div>
               </div>
+            )}
           </div>
 
         </div>

@@ -4,28 +4,35 @@ import Header from '@/components/Landingpage/Header';
 import Footer from '@/components/Landingpage/Footer';
 import BlogCard from '@/components/blog/blogCard';
 import ContactForm from '@/components/contactus/form';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { client } from '@/lib/sanity';
 
-const projectsData = [
-  // Row 1
-  { title: "Fauji Fertilizer Company", tag: "P-2.5 SMD LED Video Wall", image: "/images/FFC.jpeg", href: "#" },
-  { title: "Air Weapons Complex", tag: "P-3.9 Portable SMD LED Video Wall", image: "/images/AVC.jpeg", href: "#" },
-  { title: "Corporate Headquarters", tag: "P-3 Indoor LED Display", image: "/images/FFC.jpeg", href: "#" },
-  
-  // Row 2
-  { title: "Shopping Mall Installation", tag: "P-4 Outdoor LED Display", image: "/images/AVC.jpeg", href: "#" },
-  { title: "Bank Branch Display", tag: "P-2.5 Indoor Video Wall", image: "/images/FFC.jpeg", href: "#" },
-  { title: "Restaurant Digital Menu", tag: "P-3 LED Screen", image: "/images/AVC.jpeg", href: "#" },
-  
-  // Row 3
-  { title: "University Campus", tag: "P-3.9 Outdoor Display", image: "/images/FFC.jpeg", href: "#" },
-  { title: "Hospital Information System", tag: "P-2 Indoor LED Wall", image: "/images/AVC.jpeg", href: "#" },
-  { title: "Retail Store Display", tag: "P-4 Commercial Screen", image: "/images/FFC.jpeg", href: "#" },
-];
+interface Project {
+  _id: string
+  title: string
+  category: string
+  subcategory: string
+  description: string
+  image: string
+  href: string
+  specs: Array<{ label: string; value: string }>
+  inches?: string
+  featured: boolean
+  publishedAt: string
+}
 
 export default function ProjectsPage() {
   const [showModal, setShowModal] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<typeof projectsData[0] | null>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [projectsData, setProjectsData] = useState<Project[]>([]);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const products = await client.fetch(`*[_type == "product"] | order(publishedAt desc)`);
+      setProjectsData(products);
+    };
+    fetchProjects();
+  }, []);
 
   const handleCardClick = (project: typeof projectsData[0]) => {
     setSelectedProject(project);
@@ -64,8 +71,8 @@ export default function ProjectsPage() {
                 <BlogCard
                   image={project.image}
                   title={project.title}
-                  tag={project.tag}
-                  href="#"
+                  tag={project.subcategory}
+                  href={project.href || '#'}
                   titleCentered={true}
                   titleFontSize="text-3xl"
                   titleColor="text-[#0F141E]"
