@@ -4,6 +4,7 @@ import ProductDetail from '@/components/Products/ProductDetail'
 import Header from '@/components/Landingpage/Header'
 import Footer from '@/components/Landingpage/Footer'
 import { useRouter } from 'next/navigation'
+import WhyChooseUs from '@/components/Landingpage/WhyChooseUs'
 
 interface Product {
   _id: string
@@ -90,14 +91,30 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Product Not Found</h1>
-          <p className="text-gray-600 mb-6">{error || 'The product you are looking for does not exist.'}</p>
-          <button
-            onClick={() => router.back()}
-            className="bg-[#08425D] text-white px-6 py-2 rounded-lg font-outfit font-medium hover:bg-[#063247] transition-colors"
-          >
-            Go Back
-          </button>
+          <p className="text-gray-600">The product you're looking for doesn't exist.</p>
         </div>
+      </div>
+    )
+  }
+
+  // If no product details exist, show "No details added" page
+  if (!productDetails) {
+    return (
+      <div>
+        <Header />
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+          <div className="text-center bg-white rounded-lg shadow-lg p-8 max-w-md">
+            <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">No Product Details</h1>
+            <p className="text-gray-600 mb-4">Enhanced product details haven't been added for this product yet.</p>
+            <p className="text-sm text-gray-500">Product: {product.title}</p>
+          </div>
+        </div>
+        <Footer />
       </div>
     )
   }
@@ -121,6 +138,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
         productDescription={productDetails?.productDescription}
         productSpecification={productDetails?.productSpecification}
       />
+      <WhyChooseUs />
       <Footer />
     </div>
   )

@@ -5,19 +5,17 @@ import { client } from '@/lib/sanity'
 
 interface Product {
   _id: string
+  name?: string
+  title?: string
+  subtitle?: string
   category: string
   subcategory: string
-  title: string
-  subtitle: string
   image: string
-  name?: string
   sizes?: string
   features?: string[]
   description?: string
-  href?: string
   specs?: Array<{ label: string; value: string }>
   inches?: string
-  featured: boolean
   publishedAt: string
 }
 
@@ -51,6 +49,8 @@ export default function AdminProductsPage() {
     productDescription: '',
     productSpecification: ''
   })
+  const [uploadedBannerImage, setUploadedBannerImage] = useState<string | null>(null)
+  const [uploadingBanner, setUploadingBanner] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
   const [existingProductDetails, setExistingProductDetails] = useState<any>(null)
   const [editingDetailsId, setEditingDetailsId] = useState<string | null>(null)
@@ -102,18 +102,16 @@ export default function AdminProductsPage() {
       // Prepare the product data according to current product structure
       const productData = {
         _type: 'product',
-        title: isProductsS ? formData.subcategory || '' : formData.title,
-        subtitle: formData.subtitle || '',
-        category: formData.category || '',
-        subcategory: formData.subcategory || '',
-        name: isProductsS ? formData.title : undefined,
+        name: formData.name || formData.title,
+        title: formData.title,
+        subtitle: formData.subtitle,
+        category: formData.category,
+        subcategory: formData.subcategory,
         features: formData.features || [],
         sizes: formData.sizes || '',
         image: formData.image || '/images/placeholder.jpg',
-        href: formData.href || '#',
         specs: formData.specs || [],
         inches: formData.inches || '',
-        featured: formData.featured || false,
       }
 
       let response
@@ -176,6 +174,9 @@ export default function AdminProductsPage() {
   }
 
   const handleAddProductDetails = (product: Product) => {
+    console.log('handleAddProductDetails called with product:', product)
+    console.log('Product ID:', product._id)
+    console.log('Product title:', product.title)
     setSelectedProduct(product)
     setDetailsFormData({
       bannerTitle: '',
@@ -186,6 +187,7 @@ export default function AdminProductsPage() {
       productDescription: '',
       productSpecification: ''
     })
+    setUploadedBannerImage(null)
     setShowDetailsForm(true)
   }
 
@@ -271,7 +273,8 @@ export default function AdminProductsPage() {
 
   const handleEditProductDetails = async (product: Product) => {
     try {
-      // Fetch existing product details
+      console.log('Fetching product details for product:', product._id)
+      
       const response = await fetch(`/api/product-details?productId=${product._id}`)
       const data = await response.json()
       
@@ -289,6 +292,14 @@ export default function AdminProductsPage() {
         setEditingDetailsId(data.productDetails._id)
         setExistingProductDetails(data.productDetails)
         setSelectedProduct(product)
+        
+        // Set uploaded banner image if exists
+        if (data.productDetails.bannerImage) {
+          setUploadedBannerImage(data.productDetails.bannerImage)
+        } else {
+          setUploadedBannerImage(null)
+        }
+        
         setShowDetailsForm(true)
       } else {
         // No existing details, open as new
@@ -354,6 +365,14 @@ export default function AdminProductsPage() {
   const handleEdit = (product: Product) => {
     setFormData(product)
     setEditingId(product._id)
+    
+    // Determine product type based on existing data
+    if (product.features && product.features.length > 0) {
+      setProductType('productFeatures')
+    } else {
+      setProductType('productCard')
+    }
+    
     setShowForm(true)
   }
 
@@ -383,16 +402,72 @@ export default function AdminProductsPage() {
     setUploading(true)
 
     try {
-      // For now, we'll create a temporary URL and store it
-      // In production, you'd upload to a service like Cloudinary or AWS S3
-      const imageUrl = `/images/${file.name}`
+      // Create FormData for upload
+      const formData = new FormData()
+      formData.append('file', file)
+
+      // Upload to Sanity
+      const response = await fetch('/api/upload-sanity', {
+        method: 'POST',
+        body: formData,
+      })
+
+      const result = await response.json()
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Upload failed')
+      }
+
+      // Store the Sanity asset URL
+      const imageUrl = result.asset.url
       setUploadedImage(imageUrl)
       setFormData(prev => ({ ...prev, image: imageUrl }))
     } catch (error) {
       console.error('Error uploading image:', error)
-      alert('Error uploading image')
+      alert('Error uploading image: ' + (error as Error).message)
     } finally {
       setUploading(false)
+    }
+  }
+
+  const handleBannerImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    // Check file size (5MB limit)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('File size must be less than 5MB')
+      return
+    }
+
+    setUploadingBanner(true)
+
+    try {
+      // Create FormData for upload
+      const formData = new FormData()
+      formData.append('file', file)
+
+      // Upload to Sanity
+      const response = await fetch('/api/upload-sanity', {
+        method: 'POST',
+        body: formData,
+      })
+
+      const result = await response.json()
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Upload failed')
+      }
+
+      // Store the Sanity asset URL
+      const imageUrl = result.asset.url
+      setUploadedBannerImage(imageUrl)
+      setDetailsFormData(prev => ({ ...prev, bannerImage: imageUrl }))
+    } catch (error) {
+      console.error('Error uploading banner image:', error)
+      alert('Error uploading banner image: ' + (error as Error).message)
+    } finally {
+      setUploadingBanner(false)
     }
   }
 
@@ -401,6 +476,7 @@ export default function AdminProductsPage() {
     setEditingId(null)
     setFormData({})
     setUploadedImage(null)
+    setUploadedBannerImage(null)
   }
 
   if (loading) {
@@ -482,7 +558,7 @@ export default function AdminProductsPage() {
                   <select
                     value={formData.category || ''}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9] text-black"
                     required
                   >
                     <option value="">Select Category</option>
@@ -503,7 +579,7 @@ export default function AdminProductsPage() {
                     <select
                       value={formData.subcategory || ''}
                       onChange={(e) => setFormData({ ...formData, subcategory: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9]"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9] text-black"
                       required
                     >
                       <option value="">Select Sub Category</option>
@@ -525,7 +601,7 @@ export default function AdminProductsPage() {
                       type="file"
                       accept=".png,.jpg,.jpeg"
                       onChange={handleImageUpload}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9]"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9] text-black"
                       disabled={uploading}
                     />
                     <p className="text-xs text-gray-500">Allowed formats: PNG, JPG, JPEG (Max 5MB)</p>
@@ -552,7 +628,7 @@ export default function AdminProductsPage() {
                         type="text"
                         value={formData.title || ''}
                         onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9]"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9] text-black"
                         placeholder="Product title"
                         required
                       />
@@ -564,7 +640,7 @@ export default function AdminProductsPage() {
                         type="text"
                         value={formData.sizes || ''}
                         onChange={(e) => setFormData({ ...formData, sizes: e.target.value })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9]"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9] text-black"
                         placeholder="Product size (e.g., 55&quot; 65&quot; 75&quot;)"
                       />
                     </div>
@@ -573,8 +649,8 @@ export default function AdminProductsPage() {
                       <label className="block text-sm font-medium text-gray-700 mb-2">Features</label>
                       <textarea
                         value={formData.features ? formData.features.join('\n') : ''}
-                        onChange={(e) => setFormData({ ...formData, features: e.target.value.split('\n').filter(f => f.trim()) })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9]"
+                        onChange={(e) => setFormData({ ...formData, features: e.target.value.split('\n') })}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9] text-black"
                         rows={4}
                         placeholder="Enter features (one per line)"
                         required
@@ -592,7 +668,7 @@ export default function AdminProductsPage() {
                         type="text"
                         value={formData.title || ''}
                         onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9]"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9] text-black"
                         placeholder="Product title"
                         required
                       />
@@ -604,33 +680,12 @@ export default function AdminProductsPage() {
                         type="text"
                         value={formData.subtitle || ''}
                         onChange={(e) => setFormData({ ...formData, subtitle: e.target.value })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9]"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9] text-black"
                         placeholder="Product subtitle"
                       />
                     </div>
                   </>
                 )}
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Product Detail Page URL (Optional)</label>
-                  <input
-                    type="text"
-                    value={formData.href || ''}
-                    onChange={(e) => setFormData({ ...formData, href: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9]"
-                    placeholder="/products/product-name"
-                  />
-                </div>
-
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={formData.featured || false}
-                    onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
-                    className="mr-2"
-                  />
-                  <label className="text-sm font-medium text-gray-700">Featured Product</label>
-                </div>
 
                 <div className="flex gap-4">
                   <button
@@ -668,7 +723,7 @@ export default function AdminProductsPage() {
                     type="text"
                     value={detailsFormData.bannerTitle}
                     onChange={(e) => setDetailsFormData({ ...detailsFormData, bannerTitle: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9] text-black"
                     placeholder="Banner title"
                     required
                   />
@@ -680,7 +735,7 @@ export default function AdminProductsPage() {
                   <textarea
                     value={detailsFormData.bannerDescription}
                     onChange={(e) => setDetailsFormData({ ...detailsFormData, bannerDescription: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9] text-black"
                     placeholder="Banner description"
                     rows={3}
                     required
@@ -690,14 +745,27 @@ export default function AdminProductsPage() {
                 {/* Banner Image */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Banner Image</label>
-                  <input
-                    type="text"
-                    value={detailsFormData.bannerImage}
-                    onChange={(e) => setDetailsFormData({ ...detailsFormData, bannerImage: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9]"
-                    placeholder="Banner image URL"
-                  />
-                  <p className="text-xs text-gray-500 mt-1">Enter the URL for the banner image (optional)</p>
+                  <div className="space-y-2">
+                    <input
+                      type="file"
+                      accept=".png,.jpg,.jpeg"
+                      onChange={handleBannerImageUpload}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9] text-black"
+                      disabled={uploadingBanner}
+                    />
+                    <p className="text-xs text-gray-500">Allowed formats: PNG, JPG, JPEG (Max 5MB)</p>
+                    {uploadingBanner && <p className="text-sm text-blue-600">Uploading...</p>}
+                    {uploadedBannerImage && (
+                      <div className="mt-2">
+                        <img 
+                          src={uploadedBannerImage} 
+                          alt="Banner Preview" 
+                          className="w-full h-32 object-cover rounded-lg border"
+                        />
+                        <p className="text-xs text-gray-600 mt-1">Banner image uploaded: {uploadedBannerImage}</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 {/* Product Image (Auto-fetched, read-only) */}
@@ -730,7 +798,7 @@ export default function AdminProductsPage() {
                   <textarea
                     value={detailsFormData.productDescription}
                     onChange={(e) => setDetailsFormData({ ...detailsFormData, productDescription: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9] text-black"
                     placeholder="Product description"
                     rows={4}
                     required
@@ -743,7 +811,7 @@ export default function AdminProductsPage() {
                   <textarea
                     value={detailsFormData.productSpecification}
                     onChange={(e) => setDetailsFormData({ ...detailsFormData, productSpecification: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#14A4E9] text-black"
                     placeholder="Product specification"
                     rows={4}
                     required
@@ -834,14 +902,7 @@ export default function AdminProductsPage() {
                     <p className="text-sm text-gray-700 mb-2">{product.description}</p>
                     {product.inches && <p className="text-sm text-gray-500 mb-2">Size: {product.inches}</p>}
                     
-                    <div className="flex items-center gap-2 mt-3">
-                      {product.featured && (
-                        <span className="px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-800">
-                          Featured
-                        </span>
-                      )}
-                    </div>
-                  </div>
+                                      </div>
                 ))}
               </div>
             </div>

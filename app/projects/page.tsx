@@ -4,35 +4,30 @@ import Header from '@/components/Landingpage/Header';
 import Footer from '@/components/Landingpage/Footer';
 import BlogCard from '@/components/blog/blogCard';
 import ContactForm from '@/components/contactus/form';
-import { useState, useEffect } from 'react';
-import { client } from '@/lib/sanity';
+import { useState } from 'react';
+import Banner from '@/components/Products/banner';
+import GetQuote from '@/components/GetQuote';
 
-interface Project {
-  _id: string
-  title: string
-  category: string
-  subcategory: string
-  description: string
-  image: string
-  href: string
-  specs: Array<{ label: string; value: string }>
-  inches?: string
-  featured: boolean
-  publishedAt: string
-}
+const projectsData = [
+  // Row 1
+  { title: "Fauji Fertilizer Company", tag: "P-2.5 SMD LED Video Wall", image: "/images/FFC.jpeg", href: "#" },
+  { title: "Air Weapons Complex", tag: "P-3.9 Portable SMD LED Video Wall", image: "/images/AVC.jpeg", href: "#" },
+  { title: "Corporate Headquarters", tag: "P-3 Indoor LED Display", image: "/images/FFC.jpeg", href: "#" },
+  
+  // Row 2
+  { title: "Shopping Mall Installation", tag: "P-4 Outdoor LED Display", image: "/images/AVC.jpeg", href: "#" },
+  { title: "Bank Branch Display", tag: "P-2.5 Indoor Video Wall", image: "/images/FFC.jpeg", href: "#" },
+  { title: "Restaurant Digital Menu", tag: "P-3 LED Screen", image: "/images/AVC.jpeg", href: "#" },
+  
+  // Row 3
+  { title: "University Campus", tag: "P-3.9 Outdoor Display", image: "/images/FFC.jpeg", href: "#" },
+  { title: "Hospital Information System", tag: "P-2 Indoor LED Wall", image: "/images/AVC.jpeg", href: "#" },
+  { title: "Retail Store Display", tag: "P-4 Commercial Screen", image: "/images/FFC.jpeg", href: "#" },
+];
 
 export default function ProjectsPage() {
   const [showModal, setShowModal] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [projectsData, setProjectsData] = useState<Project[]>([]);
-
-  useEffect(() => {
-    const fetchProjects = async () => {
-      const products = await client.fetch(`*[_type == "product"] | order(publishedAt desc)`);
-      setProjectsData(products);
-    };
-    fetchProjects();
-  }, []);
+  const [selectedProject, setSelectedProject] = useState<typeof projectsData[0] | null>(null);
 
   const handleCardClick = (project: typeof projectsData[0]) => {
     setSelectedProject(project);
@@ -60,6 +55,21 @@ export default function ProjectsPage() {
             </p>
           </div>
 
+          {/* Video - Same size as banner component */}
+            <div className="w-[1450px] h-[340px] md:h-[600px] rounded-lg overflow-hidden mb-12 bg-black">
+              <video 
+                className="w-full h-full object-cover"
+                autoPlay={true}
+                muted={true}
+                loop={true}
+                playsInline
+                preload="auto"
+              >
+                <source src="/images/video1.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+
           {/* Projects Grid - 3 cards per row */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {projectsData.map((project, index) => (
@@ -71,8 +81,8 @@ export default function ProjectsPage() {
                 <BlogCard
                   image={project.image}
                   title={project.title}
-                  tag={project.subcategory}
-                  href={project.href || '#'}
+                  tag={project.tag}
+                  href="#"
                   titleCentered={true}
                   titleFontSize="text-3xl"
                   titleColor="text-[#0F141E]"
@@ -90,32 +100,7 @@ export default function ProjectsPage() {
       </main>
 
       {/* Popup Modal */}
-  {showModal && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center p-4"
-    style={{ backdropFilter: 'blur(8px)', backgroundColor: 'rgba(0,0,0,0.25)' }}>
-    <div className="bg-white rounded-2xl w-full max-w-5xl max-h-[90vh] overflow-y-auto shadow-2xl relative">
-      
-      {/* Close Button */}
-      <button
-        onClick={closeModal}
-        className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 hover:text-gray-700 transition-colors"
-      >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-
-      <div className="flex flex-col lg:flex-row px-6 pb-4 pt-16 gap-8">
-        <ContactForm showSocialMedia={false}
-        title='Get Your Own SMD Screen'
-        subtitle='We are Just a Call Away!'
-        description='Looking to install a bright, digital display for your location? Wise Vision makes it simple. We provide complete services, from selling the best screens to full installation. Tell us what you need, and we will guide you step-by-step.'
-        
-        />
-      </div>
-    </div>
-  </div>
-)}
+  {showModal && <GetQuote onClose={closeModal} />}
       
       <Footer />
     </div>

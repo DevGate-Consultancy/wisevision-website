@@ -2,8 +2,8 @@ import { defineConfig } from 'sanity'
 import { schemaTypes } from './schemas'
 
 export default defineConfig({
-  projectId: 'r397y8o5',
-  dataset: 'production',
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
   useCdn: true,
   apiVersion: '2024-03-19',
   schema: {

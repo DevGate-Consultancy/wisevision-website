@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import ProductCard from './card';
 import Banner from '@/components/Products/banner';
+import GetQuote from '@/components/GetQuote';
 
 interface Product {
   image: string;
@@ -64,6 +65,13 @@ export default function Products({
   
   // Active button state
   const [activeButton, setActiveButton] = useState(navigationButtons?.[0]?.targetId || '');
+  
+  // Modal state
+  const [showModal, setShowModal] = useState(false);
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   // Use specific colors if provided, otherwise fall back to legacy textColor
   const bannerColor = bannerTextColor;
@@ -220,7 +228,10 @@ export default function Products({
                           ))}
                         </ul>
                         <div className="mt-6 flex justify-center w-full"> 
-                          <button className="bg-[#08425D] hover:bg-[#1a4068] text-[#FFFFFF] px-8 py-3 rounded-md transition-colors duration-200">
+                          <button 
+                            onClick={() => setShowModal(true)}
+                            className="bg-[#08425D] hover:bg-[#1a4068] text-[#FFFFFF] px-8 py-3 rounded-md transition-colors duration-200"
+                          >
                             Get A Quote
                           </button>
                         </div>
@@ -247,6 +258,9 @@ export default function Products({
           </div>
         </div>
       )}
+      
+      {/* Get Quote Modal */}
+      {showModal && <GetQuote onClose={closeModal} />}
     </div>
   );
 }

@@ -21,7 +21,13 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ error: 'Product details not found' }, { status: 404 })
       }
       
-      return NextResponse.json({ productDetails })
+      return NextResponse.json({ 
+        productDetails,
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache'
+        }
+      })
     } else {
       // Fetch all product details
       const allProductDetails = await client.fetch(`
@@ -31,7 +37,13 @@ export async function GET(request: NextRequest) {
       console.log('All product details:', allProductDetails)
       console.log('Number of product details found:', allProductDetails?.length || 0)
       
-      return NextResponse.json({ productDetails: allProductDetails })
+      return NextResponse.json({ 
+        productDetails: allProductDetails,
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache'
+        }
+      })
     }
   } catch (error) {
     console.error('Error fetching product details:', error)
@@ -126,7 +138,13 @@ export async function DELETE(request: NextRequest) {
     
     await writeClient.delete(id)
     
-    return NextResponse.json({ message: 'Product details deleted successfully' })
+    return NextResponse.json({ 
+      message: 'Product details deleted successfully',
+      headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache'
+      }
+    })
   } catch (error) {
     console.error('Error deleting product details:', error)
     const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
