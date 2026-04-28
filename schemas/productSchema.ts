@@ -1,15 +1,17 @@
-export default {
+import { defineType, defineField } from 'sanity'
+
+export default defineType({
   name: 'product',
   title: 'Product',
   type: 'document',
   fields: [
-    {
-      name: 'titleInternal',
+    defineField({
+      name: 'title',
       title: 'Product Title',
       type: 'string',
       validation: Rule => Rule.required().min(1),
-    },
-    {
+    }),
+    defineField({
       name: 'category',
       title: 'Category',
       type: 'string',
@@ -25,59 +27,50 @@ export default {
         ],
       },
       validation: Rule => Rule.required(),
-    },
-    {
+    }),
+    defineField({
       name: 'subcategory',
       title: 'Sub Category',
       type: 'string',
       validation: Rule => Rule.required(),
-    },
-    {
-      name: 'title',
-      title: 'Title',
-      type: 'string',
-      validation: Rule => Rule.required(),
-    },
-    {
+    }),
+    defineField({
       name: 'subtitle',
       title: 'Subtitle',
       type: 'string',
-    },
-    {
+    }),
+    defineField({
       name: 'image',
-      title: 'Product Image Path',
-      type: 'string',
+      title: 'Product Image',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
       validation: Rule => Rule.required(),
-    },
-    {
+    }),
+    defineField({
       name: 'name',
       title: 'Name',
       type: 'string',
-    },
-    {
+    }),
+    defineField({
       name: 'sizes',
       title: 'Sizes',
       type: 'string',
-    },
-    {
+    }),
+    defineField({
       name: 'features',
       title: 'Features',
       type: 'array',
       of: [{ type: 'string' }],
-    },
-    {
+    }),
+    defineField({
       name: 'description',
       title: 'Description',
       type: 'text',
       rows: 3,
-    },
-    {
-      name: 'href',
-      title: 'Product Detail Page URL',
-      type: 'string',
-      initialValue: '#',
-    },
-    {
+    }),
+    defineField({
       name: 'specs',
       title: 'Specifications',
       type: 'array',
@@ -100,23 +93,18 @@ export default {
           ],
         },
       ],
-    },
-    {
+    }),
+    defineField({
       name: 'inches',
       title: 'Size/Inches',
       type: 'string',
-    },
-    {
-      name: 'featured',
-      title: 'Featured Product',
-      type: 'boolean',
-      initialValue: false,
-    },
+    }),
   ],
   preview: {
     select: {
       title: 'title',
       subtitle: 'subtitle',
+      media: 'image',
     },
   },
-}
+})

@@ -1,15 +1,14 @@
-import { NextResponse } from 'next/server'
+import { NextResponse, NextRequest } from 'next/server'
 import { client } from '@/lib/sanity'
 
 export async function GET(
-  request: Request,
-  { params }: { params: { category: string } }
+  request: NextRequest, 
+  { params }: { params: Promise<{ category: string }> }
 ) {
   try {
-    console.log('Params object:', params)
-    console.log('Category param:', params.category)
+   
     
-    const category = params.category
+    const {category} = await params;
     
     // Decode URL-encoded category name
     const decodedCategory = decodeURIComponent(category)
